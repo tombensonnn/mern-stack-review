@@ -130,9 +130,13 @@ export const updateComment = async(req, res) => {
 
     // console.log(updatedComment);
 
-    await CommentModal.findByIdAndUpdate(comment_id, updatedComment, {new: true});
+    
 
-    res.json(updateComment);
+    await CommentModal.findByIdAndUpdate(comment_id, updatedComment, {new: true});
+    const comment = await CommentModal.findById(comment_id);
+
+    console.log(updatedComment);
+    res.json(comment);
 
   } catch (error) {
     // console.log(error);

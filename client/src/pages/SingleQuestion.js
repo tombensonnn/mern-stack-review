@@ -49,6 +49,8 @@ function SingleQuestion() {
       // console.log("second")
     }
 
+    console.log(tags);
+
   }, [dispatch,tags]);
   
   // useEffect(() => {

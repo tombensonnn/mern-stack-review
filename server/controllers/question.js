@@ -216,7 +216,7 @@ export const getRelatedQuestions = async (req, res) => {
   try {
     // const questions = await QuestionModal.find({ tags: { $in: tags } });
     const questions = await QuestionModal.aggregate([{$match: {tags: {$in:tags}}}, {$sample: {size: 4}}]);
-    
+    console.log(tags);
     res.json(questions);
   } catch (error) {
     // console.log(error)

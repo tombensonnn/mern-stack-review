@@ -31,9 +31,9 @@ function App() {
 
   useEffect(()=>{
       dispatch(setUser(user))
-      if(user){
-        dispatch(getLoggedInUser())
-      }
+      // if(user){
+      //   dispatch(getLoggedInUser())
+      // }
   },[dispatch, user])
 
 

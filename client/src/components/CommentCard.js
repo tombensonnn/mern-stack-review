@@ -70,7 +70,7 @@ function CommentCard({description,createdAt,creator,_id,creatorId,likes}) {
         // console.log(updatedCommentData)
         const comment_id = _id
         dispatch(updateComment({id,updatedCommentData,toast,comment_id}))
-        window.location.reload() // sıkıntı
+        //window.location.reload() // sıkıntı
     }
 }
 // hoverCard classname MDBCARD'a eklenebilir

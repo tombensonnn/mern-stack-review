@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
 import * as api from "../api.js";
 
 export const createQuestion = createAsyncThunk(
@@ -81,7 +81,7 @@ export const updateQuestion = createAsyncThunk(
   async ({updatedQuestionData,id,toast,navigate},{ rejectWithValue }) => {
     try {
       const response = await api.updateQuestion(updatedQuestionData,id);
-      // console.log(response.data);
+      console.log(response.data);
       toast.success("Soru başarıyla güncellendi")
       navigate("/");
       return response.data;
@@ -227,6 +227,7 @@ export const updateComment = createAsyncThunk(
       // console.log(response.data);
       toast.success("Yorum Başarıyla Güncellendi")
       // navigate("/");
+      console.log(response.data);
       return response.data;
     } catch (error) {
       // console.log(error);
@@ -334,7 +335,7 @@ const questionSlice = createSlice({
       // ------------------------------------------------------------------------
       [getQuestion.pending]: (state, action) => {
         //böyle olmamalı
-        // state.loading = true;
+        state.loading = true;
       },
       [getQuestion.fulfilled]: (state, action) => {
         state.loading = false;
@@ -493,7 +494,9 @@ const questionSlice = createSlice({
       [getAllCommentsByQuestion.fulfilled]: (state, action) => {
         state.loading = false;
         state.comments= action.payload.data;
-        // console.log(state.comments)
+        //console.log(current(state.comments))
+        console.log('getAllCommentsByQuestion');
+        console.log(action.payload);
       },
       [getAllCommentsByQuestion.rejected]: (state, action) => {
         state.loading = false;
@@ -549,13 +552,16 @@ const questionSlice = createSlice({
         // console.log("action",action)
         const {arg : {comment_id}} = action.meta;
         // console.log(action)
-        // console.log(state.comments)
+        console.log('update');
+        console.log(current(state.comments))
         // console.log(comment_id)
         if(comment_id){
           state.userComments= state.userComments.map((item) => item._id === comment_id ? action.payload : item)
-          state.comments= state.comments.map((item) => item._id === comment_id ? action.payload : item)
+          state.comments= current(state.comments).map((item) => item._id === comment_id ? action.payload : item)
+
         }
-        // console.log(state.comments)
+        console.log(state.comments)
+        console.log(action);
 
       },
       [updateComment.rejected]: (state, action) => {
